@@ -1,0 +1,40 @@
+<launch>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <!-- <arg name="world_name" value="$(find shiro_description)/launch/world/normal.world"/> -->
+      <arg name="use_sim_time" value="true"/>
+      <!-- <arg name="paused" default="true"/> -->
+    </include>
+  
+    <!-- Robot -->
+    <arg name="robot" default="$(find shiro_description)/urdf/shiro.urdf"/>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg robot)" />
+    <arg name="x" default="0"/>
+    <arg name="y" default="0"/>
+    <arg name="z" default=".3"/>
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model shiro -param robot_description -x $(arg x) -y $(arg y) -z $(arg z)"/>
+  
+    <!-- Controllers -->
+    <rosparam file="$(find shiro_description)/config/controllers.yaml" command="load"/>
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" output="screen" ns="/shiro" 
+    args="joint_state_controller
+          FR_hip_controller FR_thigh_controller FR_calf_controller
+          FL_hip_controller FL_thigh_controller FL_calf_controller
+          RR_hip_controller RR_thigh_controller RR_calf_controller
+          RL_hip_controller RL_thigh_controller RL_calf_controller " />
+  
+    <!-- Robot State Publisher -->
+    <!-- node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" respawn="false" output="screen">
+      <remap from="/joint_states" to="/shiro/joint_states" />
+      <param name="publish_frequency" type="double" value="10" />
+          rf_joint1 rf_joint2 rf_joint3
+          lf_joint1 lf_joint2 lf_joint3 
+          rb_joint1 rb_joint2 rb_joint3 
+          lb_joint1 lb_joint2 lb_joint3
+
+          FL_hip_controller FL_thigh_controller FL_calf_controller
+          FR_hip_controller FR_thigh_controller FR_calf_controller
+          RL_hip_controller RL_thigh_controller RL_calf_controller
+          RR_hip_controller RR_thigh_controller RR_calf_controller 
+    </node -->
+
+</launch>

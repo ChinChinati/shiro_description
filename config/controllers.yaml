@@ -1,0 +1,73 @@
+shiro:
+  
+  joint_state_controller:
+      type: joint_state_controller/JointStateController
+      publish_rate: 50
+
+  # FL [30,2.2 Fast walking] [30,2.8 Without falling best]Controllers ------------------------------------------------------------ 
+  FL_hip_controller:
+      type: effort_controllers/JointPositionController
+      joint: FL_hip_joint
+      pid: {p: 30, i: 0.0, d: 2.2, i_clamp_min:  -1000, i_clamp_max: 1000}
+        
+  FL_thigh_controller:
+      type: effort_controllers/JointPositionController
+      joint: FL_thigh_joint
+      pid: {p: 30, i: 0.0, d: 2.2, i_clamp_min:  -1000, i_clamp_max: 1000}
+        
+  FL_calf_controller:
+      type: effort_controllers/JointPositionController
+      joint: FL_calf_joint
+      pid: {p: 30, i: 0.0, d: 2.2, i_clamp_min:  -1000, i_clamp_max: 1000}
+
+  # FR [P = 3 and D = 2.2 BEST] Controllers ------------------------------------------------------------ 
+  FR_hip_controller:
+      type: effort_controllers/JointPositionController
+      joint: FR_hip_joint
+      pid: {p: 30, i: 0.0, d: 2.2, i_clamp_min:  -1000, i_clamp_max: 1000}
+        
+  FR_thigh_controller:
+      type: effort_controllers/JointPositionController
+      joint: FR_thigh_joint
+      pid: {p: 30, i: 0.0, d: 2.2, i_clamp_min:  -1000, i_clamp_max: 1000}
+        
+  FR_calf_controller:
+      type: effort_controllers/JointPositionController
+      joint: FR_calf_joint
+      pid: {p: 30, i: 0.0, d: 2.2, i_clamp_min:  -1000, i_clamp_max: 1000}
+
+
+
+
+  # RR Controllers ------------------------------------------------------------ 
+  RR_hip_controller:
+      type: effort_controllers/JointPositionController
+      joint: RR_hip_joint
+      pid: {p: 30, i: 0.0, d: 2.2, i_clamp_min:  -1000, i_clamp_max: 1000}
+        
+  RR_thigh_controller:
+      type: effort_controllers/JointPositionController
+      joint: RR_thigh_joint
+      pid: {p: 30, i: 0.0, d: 2.2, i_clamp_min:  -1000, i_clamp_max: 1000}
+        
+  RR_calf_controller:
+      type: effort_controllers/JointPositionController
+      joint: RR_calf_joint
+      pid: {p: 30, i: 0.0, d: 2.2, i_clamp_min:  -1000, i_clamp_max: 1000}
+
+  # RL Controllers ------------------------------------------------------------     
+  RL_hip_controller:
+      type: effort_controllers/JointPositionController
+      joint: RL_hip_joint
+      pid: {p: 30, i: 0.0, d: 2.2, i_clamp_min:  -1000, i_clamp_max: 1000}
+        
+  RL_thigh_controller:
+      type: effort_controllers/JointPositionController
+      joint: RL_thigh_joint
+      pid: {p: 30, i: 0.0, d: 2.2, i_clamp_min:  -1000, i_clamp_max: 1000}
+        
+  RL_calf_controller:
+      type: effort_controllers/JointPositionController
+      joint: RL_calf_joint
+      pid: {p: 30, i: 0.0, d: 2.2, i_clamp_min:  -1000, i_clamp_max: 1000}
+        

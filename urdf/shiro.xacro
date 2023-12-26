@@ -1,0 +1,430 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="shiro">
+    <xacro:include filename="shiro_plugins.gazebo"/>
+
+    <link name="base_link">
+        <inertial>
+            <origin xyz="8.6341840647976E-11 -7.47014087380589E-11 0.0167926957733975" rpy="0 0 0" />
+            <mass value=".710947579295475" />
+            <inertia ixx="0.00571952965856002" ixy="-0.249931495668888E-09" ixz="-0.491296123836123E-13" iyy="0.0149377959039635" iyz="-0.884334114807228E-13" izz="0.0205597203939859" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/base_link.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/base_link.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="dummy_link">
+    </link> 
+
+    <joint name="dummy_base" type="fixed">
+        <parent link="dummy_link"/>
+        <child link="base_link"/>
+    </joint>
+
+
+    <!-- RF -->
+    <link name="rf_motor">
+        <inertial>
+            <origin xyz="3.46528361561127E-13 -0.000189870270881271 0.0350742249422936" rpy="0 0 0" />
+            <mass value="0.0928911013118115" />
+            <inertia ixx="3.75161325905651E-05" ixy="-7.41190347007817E-17" ixz="5.02884658666911E-16" iyy="3.26455218272353E-05" iyz="7.89814682115298E-07" izz="2.23773454779855E-05" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/rf_motor.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/rf_motor.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="rf_joint1" type="revolute">
+        <origin xyz="0.24975 -0.12625 -0.044" rpy="0 1.5708 0" />
+        <parent link="base_link" />
+        <child link="rf_motor" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3" upper="3" effort="1.4" velocity="3" />
+        <dynamics damping="0.005" friction="0.1"/>
+    </joint>
+
+    <link name="rf_femur">
+        <inertial>
+            <origin xyz="0.131448897342225 0.0530336704844502 -0.0149773188627371" rpy="0 0 0" />
+            <mass value="0.374313439804215" />
+            <inertia ixx="0.000119417782609017" ixy="-0.000153825996805941" ixz="-7.63108458246601E-07" iyy="0.00118716799150086" iyz="4.69213005547157E-06" izz="0.00125251849201728" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/rf_femur.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/rf_femur.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="rf_joint2" type="revolute">
+        <origin xyz="0 -0.0345 0.051" rpy="1.5708 1.5708 0" />
+        <parent link="rf_motor" />
+        <child link="rf_femur" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3" upper="3" effort="1.4" velocity="3" />
+        <dynamics damping="0.005" friction="0.1"/>
+    </joint>
+
+    <link name="rf_tibia">
+        <inertial>
+            <origin xyz="-0.0867453261502669 -5.55111512312578E-17 -0.00401314334794872" rpy="0 0 0" />
+            <mass value="0.144975535641309" />
+            <inertia ixx="1.29467675591458E-05" ixy="1.22231464018803E-19" ixz="1.6087897833423E-07" iyy="0.000550341884939816" iyz="-1.27880149411164E-21" izz="0.000561764730826707" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/rf_tibia.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/rf_tibia.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="rf_joint3" type="revolute">
+        <origin xyz="0.19 0.091 0" rpy="0 0 0" />
+        <parent link="rf_femur" />
+        <child link="rf_tibia" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3" upper="3" effort="1.4" velocity="3" />
+        <dynamics damping="0.005" friction="0.1"/>
+    </joint>
+
+    <!-- LF -->
+    <link name="lf_motor">
+        <inertial>
+            <origin xyz="-3.46549178242839E-13 0.000189870270881243 0.0350742249422936" rpy="0 0 0" />
+            <mass value="0.0928911013118115" />
+            <inertia ixx="3.75161325905651E-05" ixy="-7.41209669069041E-17" ixz="-5.0288287575741E-16" iyy="3.26455218272353E-05" iyz="-7.89814682115306E-07" izz="2.23773454779855E-05" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/lf_motor.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/lf_motor.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lf_joint1" type="revolute">
+        <origin xyz="0.24975 0.12625 -0.044" rpy="0 1.5708 0" />
+        <parent link="base_link" />
+        <child link="lf_motor" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3" upper="3" effort="1.4" velocity="3" />
+        <dynamics damping="0.005" friction="0.1"/>
+    </joint>
+
+    <link name="lf_femur">
+        <inertial>
+            <origin xyz="0.131448888138708 -0.0530336704846223 -0.0149996094248208" rpy="0 0 0" />
+            <mass value="0.374313439804216" />
+            <inertia ixx="0.000119417782609017" ixy="0.000153826143645029" ixz="-8.16520905983995E-07" iyy="0.00118716799150086" iyz="-4.57684943064706E-06" izz="0.00125251849201728" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/lf_femur.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/lf_femur.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lf_joint2" type="revolute">
+        <origin xyz="0 0.0345 0.051" rpy="-1.5708 1.5708 0" />
+        <!-- rpy="1.5708 1.5708 0" />-->
+        <parent link="lf_motor" />
+        <child link="lf_femur" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3" upper="3" effort="1.4" velocity="3" />
+        <dynamics damping="0.005" friction="0.1"/>
+    </joint>
+
+    <link name="lf_tibia">
+        <inertial>
+            <origin xyz="-0.086745326150267 0 -0.00401314334794908" rpy="0 0 0" />
+            <mass value="0.14497553564131" />
+            <inertia ixx="1.29467675591458E-05" ixy="-9.6595618279603E-20" ixz="1.60878978333949E-07" iyy="0.000550341884939818" iyz="-2.72493495105014E-21" izz="0.000561764730826709" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/lf_tibia.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/lf_tibia.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lf_joint3" type="revolute">
+        <origin xyz="0.19 -0.091 0" rpy="0 0 0" />
+        <parent link="lf_femur" />
+        <child link="lf_tibia" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3" upper="3" effort="1.4" velocity="3" />
+        <dynamics damping="0.005" friction="0.1"/>
+    </joint>
+
+    <!-- RB -->
+    <link name="rb_motor">
+        <inertial>
+            <origin xyz="3.46556117136743E-13 -0.000189870270881243 0.0350742249422937" rpy="0 0 0" />
+            <mass value="0.0928911013118116" />
+            <inertia ixx="3.75161325905651E-05" ixy="-7.41198986042098E-17" ixz="5.02886912570146E-16" iyy="3.26455218272353E-05" iyz="7.89814682115311E-07" izz="2.23773454779855E-05" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/rb_motor.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/rb_motor.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="rb_joint1" type="revolute">
+        <origin xyz="-0.24975 -0.12625 -0.044" rpy="0 -1.5708 0" />
+        <!--rpy="3.1416 -1.5708 0" />-->
+        <parent link="base_link" />
+        <child link="rb_motor" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3" upper="3" effort="1.4" velocity="3" />
+        <dynamics damping="0.005" friction="0.1"/>
+    </joint>
+
+    <link name="rb_femur">
+        <inertial>
+            <origin xyz="0.131448888138708 -0.0530336704846223 -0.0149996094248204" rpy="0 0 0" />
+            <mass value="0.374313439804216" />
+            <inertia ixx="0.000119417782609017" ixy="0.000153826143645029" ixz="-8.16520905983542E-07" iyy="0.00118716799150086" iyz="-4.57684943064712E-06" izz="0.00125251849201728" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/rb_femur.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/rb_femur.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="rb_joint2" type="revolute">
+        <origin xyz="0 -0.0345 0.051" rpy="1.5708 1.5708 0" />
+        <parent link="rb_motor" />
+        <child link="rb_femur" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3" upper="3" effort="1.4" velocity="3" />
+        <dynamics damping="0.005" friction="0.1"/>
+    </joint>
+
+    <link name="rb_tibia">
+        <inertial>
+            <origin xyz="-0.0867453261502668 0 -0.00401314334794864" rpy="0 0 0" />
+            <mass value="0.144975535641309" />
+            <inertia ixx="1.29467675591458E-05" ixy="-9.49005915458181E-20" ixz="1.60878978333985E-07" iyy="0.000550341884939815" iyz="-5.69210434088898E-22" izz="0.000561764730826707" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/rb_tibia.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/rb_tibia.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="rb_joint3" type="revolute">
+        <origin xyz="0.19 -0.091 0" rpy="0 0 0" />
+        <parent link="rb_femur" />
+        <child link="rb_tibia" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3" upper="3" effort="1.4" velocity="3" />
+        <dynamics damping="0.005" friction="0.1"/>
+    </joint>
+
+    <!-- LB -->
+    <link name="lb_motor">
+        <inertial>
+            <origin xyz="-3.47402662193019E-13 0.000189870270880715 0.0350742249422937" rpy="0 0 0" />
+            <mass value="0.0928911013118115" />
+            <inertia ixx="3.75161325905651E-05" ixy="-7.41212101850725E-17" ixz="-5.02887302159402E-16" iyy="3.26455218272353E-05" iyz="-7.89814682115302E-07" izz="2.23773454779855E-05" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/lb_motor.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/lb_motor.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lb_joint1" type="revolute">
+        <origin xyz="-0.24975 0.12625 -0.044" rpy="0 -1.5708 0" />
+        <!--rpy="3.1416 -1.5708 0" />-->
+        <parent link="base_link" />
+        <child link="lb_motor" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3" upper="3" effort="1.4" velocity="3" />
+        <dynamics damping="0.005" friction="0.1"/>
+    </joint>
+
+    <!-- LB -->
+    <link name="lb_femur">
+        <inertial>
+            <origin xyz="-0.131448897342225 -0.0530336704844502 -0.0149773188627371" rpy="0 0 0" />
+            <mass value="0.374313439804215" />
+            <inertia ixx="0.000119417782609017" ixy="-0.00015382599680594" ixz="7.63108458247478E-07" iyy="0.00118716799150085" iyz="-4.69213005547143E-06" izz="0.00125251849201728" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/lb_femur.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/lb_femur.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lb_joint2" type="revolute">
+        <origin xyz="0 0.0345 0.051" rpy="-1.5708 -1.5708 0" />
+        <!--rpy="1.5708 -1.5708 0" />-->
+        <parent link="lb_motor" />
+        <child link="lb_femur" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3" upper="3" effort="1.4" velocity="3" />
+        <dynamics damping="0.005" friction="0.1"/>
+    </joint>
+
+    <link name="lb_tibia">
+        <inertial>
+            <origin xyz="-0.0867453261502669 1.66533453693773E-16 -0.00401314334794892" rpy="0 0 0" />
+            <mass value="0.144975535641309" />
+            <inertia ixx="1.29467675591458E-05" ixy="1.55285211426889E-19" ixz="1.60878978334006E-07" iyy="0.000550341884939816" iyz="1.71678900468381E-21" izz="0.000561764730826708" />
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/lb_tibia.STL" />
+            </geometry>
+            <material name="">
+                <color rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <mesh filename="package://shiro_description/meshes/lb_tibia.STL" />
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="lb_joint3" type="revolute">
+        <origin xyz="-0.19 -0.091 0" rpy="0 0 -3.1416" />
+        <parent link="lb_femur" />
+        <child link="lb_tibia" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3" upper="3" effort="1.4" velocity="3" />
+        <dynamics damping="0.005" friction="0.1"/>
+    </joint>
+
+</robot>

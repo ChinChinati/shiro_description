@@ -1,0 +1,4 @@
+<launch>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch" />
+  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" args="-file $(find shiro_description)/urdf/shiro.xacro -urdf -model shiro -x 0 -y 0 -z 2" output="screen" />
+</launch>
